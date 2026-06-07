@@ -1,14 +1,31 @@
+import os
+from dotenv import load_dotenv
+from openai import OpenAI
+
+load_dotenv()
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+
 def check_logic(answer):
-    """Simple logic critic that returns a fixed score and issue summary.
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a logical consistency critic. Check if the reasoning is clear, consistent, and supported. Return a short critique."
+            },
+            {
+                "role": "user",
+                "content": f"Evaluate this answer for logical consistency:\n\n{answer}"
+            }
+        ]
+    )
 
-    Args:
-        answer: The answer text to evaluate (unused in this simple implementation).
+    critique_text = response.choices[0].message.content
 
-    Returns:
-        dict: A dictionary with keys 'agent', 'score', and 'issue'.
-    """
     return {
         "agent": "logic_critic",
         "score": 7,
-        "issue": "Reasoning is mostly clear"
+        "issue": critique_text
     }
