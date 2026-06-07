@@ -7,9 +7,12 @@ class WorkflowState(TypedDict):
     answer: str
 
 
+from agents.generator import generate_answer
+
 def generator_node(state):
+    answer = generate_answer(state["question"])
     return {
-        "answer": f"Generated answer for: {state['question']}"
+        "answer": answer
     }
 
 
