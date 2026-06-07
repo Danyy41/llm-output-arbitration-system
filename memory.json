@@ -1,1 +1,8 @@
-{}
+[
+    {
+        "question": "What is the capital of Canada?",
+        "answer": "The capital of Canada is Ottawa.",
+        "verdict": "needs_revision",
+        "score": 7.0
+    }
+]
