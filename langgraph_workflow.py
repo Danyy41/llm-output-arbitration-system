@@ -75,7 +75,9 @@ graph.add_edge("completeness_critic", "arbitrator")
 graph.add_edge("arbitrator", END)
 
 app = graph.compile()
+graph_png = app.get_graph().draw_mermaid()
 
+print(graph_png)
 result = app.invoke({
     "question": "What is the capital of Canada?"
 })
