@@ -1,18 +1,22 @@
-"""Simple answer generator used by tests.
+import os
+from dotenv import load_dotenv
+from openai import OpenAI
 
-Provides a generate_answer(question) function that returns a sample
-string response. Keep this file minimal and side-effect free.
-"""
+load_dotenv()
 
-def generate_answer(question: str) -> str:
-    """Return a simple sample answer for the given question.
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-    Args:
-        question: The input question string.
 
-    Returns:
-        A formatted sample answer string.
-    """
-    return f"This is a sample answer to: {question}"
+def generate_answer(question):
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant. Answer clearly and briefly."},
+            {"role": "user", "content": question}
+        ]
+    )
+
+    return response.choices[0].message.content
+
 
     
